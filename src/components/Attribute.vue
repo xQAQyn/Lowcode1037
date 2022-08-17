@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    attribute
+  </div>
 </template>
 
 <script>

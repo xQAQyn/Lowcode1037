@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    BtnCreate
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    Tab
+  </div>
 </template>
 
 <script>

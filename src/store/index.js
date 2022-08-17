@@ -1,20 +1,21 @@
-import Vuex from 'vuex'
 import Vue from 'vue'
-Vue.use(store)
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
-const actions={
 
-}
-
-const mutations={
+const actions = {
 
 }
 
-const state={
+const mutations = {
 
 }
+const state = {
+	PageModules: []
+}
 
-const store = new Vuex.Store({
+
+export default new Vuex.Store({
 	actions,
 	mutations,
 	state,
