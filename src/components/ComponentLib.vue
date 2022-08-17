@@ -1,6 +1,6 @@
 <template>
   <div id="clib">
-    ComponentLib
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
   #clib{
-    background-color: bisque;
+    /*background-color: bisque;*/
     flex: 0 0 300px;
   }
 </style>

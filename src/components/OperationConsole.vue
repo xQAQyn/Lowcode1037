@@ -1,6 +1,6 @@
 <template>
   <div id="csl">
-    OperationConsole
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
   #csl{
-    background-color: chartreuse;
+    /*background-color: chartreuse;*/
     right: 0;
     flex: 0 0 300px;
   }

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {nanoid} from "nanoid";
 Vue.use(Vuex)
-
+Vue.config.devtools = true
 class PageStyle{
 	ToLeft;
 	ToTop;
@@ -48,35 +48,55 @@ class PageModule{
 	}
 }
 
+function GetIndexByID(context,id){
+	for(let i = 0;i < context.state.PageModules.length;i++)
+		if(context.state.PageModules[i].id === id)
+			return i;
+	return -1
+}
+
 const actions = {
+
 	CreateModule(context,type){
 		if(type === 'p' || type === 'a' || type === 'button' || type === 'img' || type === 'video')
 			context.commit('CreateModule',type)
 	},
-	DeleteModule(context,id) {
-		context.commit('DeleteModule',id)
-	}
-	UpdateModule(context,id,) {
 
+	DeleteModule(context,id) {
+		let index = GetIndexByID(context,id);
+		if(index !== -1)
+			context.commit('DeleteModule',index)
+	},
+
+	UpdateModule(context,payload) {
+		console.log(payload)
+		const index = GetIndexByID(context,payload.id);
+		if(index!== -1)
+			context.commit('UpdateModule',{
+				index: index,
+				styleName: payload.styleName,
+				styleVal: payload.styleVal
+			})
 	}
 }
 
 const mutations = {
 	CreateModule(context, type) {
-		context.state.PageModules.push(new PageModule(type));
+		state.PageModules.push(new PageModule(type));
 	},
-	DeleteModule(context,id){
-		for(let i = 0;i < context.state.PageModules.length;i++){
-			if(context.state.PageModules[i].id === id)
-				context.state.PageModules.splice(i,1)
-		}
+
+	DeleteModule(context,index){
+		state.PageModules.splice(index,1)
+	},
+
+	UpdateModule(context,payload) {
+		state.PageModules[payload.index].style[payload.styleName] = payload.styleVal
 	}
 }
 
 const state = {
-	PageModules: []
+	PageModules: [],
 }
-
 
 export default new Vuex.Store({
 	actions,

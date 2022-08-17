@@ -1,6 +1,6 @@
 <template>
   <div id="edt">
-    PageEditor
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
   #edt{
-    background-color: cornflowerblue;
+    /*background-color: grey*/
     flex: 0 0 800px;
     height: 450px;
     margin: 200px 10px;
