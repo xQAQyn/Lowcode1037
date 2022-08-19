@@ -43,7 +43,6 @@ export default {
     },
     GetStyleObject: function (mod) {
       const style = mod.style;
-      console.log(this.GetPxNumber(style.ToLeft));
       return {
         left:
           Number(this.GetOffsetLeft()) +
@@ -90,7 +89,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #edt {
   background-color: grey;
   flex: 0 0 800px;
@@ -98,7 +97,11 @@ export default {
   margin: 200px 10px;
 }
 
-.module {
+#edt .module {
   position: absolute;
+}
+
+#edt p {
+  margin: 0;
 }
 </style>
