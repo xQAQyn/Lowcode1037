@@ -35,9 +35,10 @@ export default {
       return this.$refs.editor.offsetTop;
     },
     GetStyleObject: function (mod) {
+      console.log(mod.style);
       return {
-        left: mod.style.ToLeft + this.GetOffsetLeft() + "px",
-        top: mod.style.ToTop + this.GetOffsetTop() + "px",
+        left: Number(mod.style.ToLeft) + Number(this.GetOffsetLeft()) + "px",
+        top: Number(mod.style.ToTop) + Number(this.GetOffsetTop()) + "px",
         width: mod.style.BoxWidth + "px",
         height: mod.style.BoxHeight + "px",
         backgroundColor: mod.style.BackgroundColor,
