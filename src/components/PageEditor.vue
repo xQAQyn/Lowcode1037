@@ -24,27 +24,49 @@ export default {
     };
   },
   methods: {
-    op() {
-      console.log(this.$refs.editor.offsetTop);
+    IsNumber: function (val) {
+      var regex = /^[0-9]+\.?[0-9]*$/;
+      return regex.test(val);
+    },
+    IsPx: function (val) {
+      var regex = /^[0-9]+\.?[0-9]*px$/;
+      return regex.test(val);
+    },
+    GetPxNumber: function (val) {
+      return val.replace("px", "");
     },
     GetOffsetLeft: function () {
-      console.log(this.$refs.editor.offsetLeft);
       return this.$refs.editor.offsetLeft;
     },
     GetOffsetTop: function () {
       return this.$refs.editor.offsetTop;
     },
     GetStyleObject: function (mod) {
-      console.log(mod.style);
+      const style = mod.style;
+      console.log(this.GetPxNumber(style.ToLeft));
       return {
-        left: Number(mod.style.ToLeft) + Number(this.GetOffsetLeft()) + "px",
-        top: Number(mod.style.ToTop) + Number(this.GetOffsetTop()) + "px",
-        width: mod.style.BoxWidth + "px",
-        height: mod.style.BoxHeight + "px",
-        backgroundColor: mod.style.BackgroundColor,
-        color: mod.style.FontColor,
-        fontSize: mod.style.FontSize + "px",
-        fontWeight: mod.style.FontWeight,
+        left:
+          Number(this.GetOffsetLeft()) +
+          (this.IsNumber(style.ToLeft)
+            ? Number(style.ToLeft)
+            : this.IsPx(style.ToLeft)
+            ? Number(this.GetPxNumber(style.ToLeft))
+            : 0) +
+          "px",
+        top:
+          Number(this.GetOffsetTop()) +
+          (this.IsNumber(style.ToTop)
+            ? Number(style.ToTop)
+            : this.IsPx(style.ToTop)
+            ? Number(this.GetPxNumber(style.ToTop))
+            : 0) +
+          "px",
+        width: this.IsNumber(style.BoxWidth) ? style.BoxWidth + "px" : style.BoxWidth,
+        height: this.IsNumber(style.BoxHeight) ? style.BoxHeight + "px" : style.BoxHeight,
+        backgroundColor: style.BackgroundColor,
+        color: style.FontColor,
+        fontSize: this.IsNumber(style.FontSize) ? style.FontSize + "px" : style.FontSize,
+        fontWeight: style.FontWeight,
       };
     },
     GenerateHtml: function (mod) {
