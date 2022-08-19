@@ -1,19 +1,23 @@
 <template>
-  <div id="csl" v-show="Selected !== '' ">
-      <h1>内容设置</h1>
-      文本内容：<input :value="PageModule.value" @blur="ChangeValue($event)"><br/>
-      url：<input :value="PageModule.url" @blur="ChangeUrl($event)"><br/>
-      <h1>位置设置</h1>
-      x：<input :value="PageModule.style.ToLeft" @blur="ChangeStyle($event,'ToLeft')"><br/>
-      y：<input :value="PageModule.style.ToTop" @blur="ChangeStyle($event,'ToTop')"><br/>
-      <h1>盒子设置</h1>
-      盒子宽度：<input :value="PageModule.style.BoxWidth" @blur="ChangeStyle($event,'BoxWidth')"><br/>
-      盒子高度：<input :value="PageModule.style.BoxHeight" @blur="ChangeStyle($event,'BoxHeight')"><br/>
-      盒子背景色：<input :value="PageModule.style.BackgroundColor" @blur="ChangeStyle($event,'BackgroundColor')"><br/>
-      <h1>字体设置</h1>
-      字体大小：<input :value="PageModule.style.FontSize" @blur="ChangeStyle($event,'FontSize')"><br/>
-      字体粗细：<input :value="PageModule.style.FontWeight" @blur="ChangeStyle($event,'FontWeight')"><br/>
-      字体颜色：<input :value="PageModule.style.FontColor" @blur="ChangeStyle($event,'FontColor')"><br/>
+  <div id="csl" >
+      <div v-if="Selected !== '' ">
+          <h1>内容设置</h1>
+          文本内容：<input :value="PageModule.value" @blur="ChangeValue($event)"><br/>
+          url：<input :value="PageModule.url" @blur="ChangeUrl($event)"><br/>
+          <h1>位置设置</h1>
+          x：<input :value="PageModule.style.ToLeft" @blur="ChangeStyle($event,'ToLeft')"><br/>
+          y：<input :value="PageModule.style.ToTop" @blur="ChangeStyle($event,'ToTop')"><br/>
+          <h1>盒子设置</h1>
+          盒子宽度：<input :value="PageModule.style.BoxWidth" @blur="ChangeStyle($event,'BoxWidth')"><br/>
+          盒子高度：<input :value="PageModule.style.BoxHeight" @blur="ChangeStyle($event,'BoxHeight')"><br/>
+          盒子背景色：<input :value="PageModule.style.BackgroundColor" @blur="ChangeStyle($event,'BackgroundColor')"><br/>
+          <h1>字体设置</h1>
+          字体大小：<input :value="PageModule.style.FontSize" @blur="ChangeStyle($event,'FontSize')"><br/>
+          字体粗细：<input :value="PageModule.style.FontWeight" @blur="ChangeStyle($event,'FontWeight')"><br/>
+          字体颜色：<input :value="PageModule.style.FontColor" @blur="ChangeStyle($event,'FontColor')"><br/>
+      </div>
+      <p v-else>点击元素查看属性</p>
+
   </div>
 </template>
 

@@ -6,10 +6,10 @@
         </div>
 
         <div id="preview" v-if="$store.state.Preview">
-            123
+
         </div>
         <div id="Sourcecode" v-else-if="$store.state.SourceCode">
-            345
+
         </div>
 
         <div id="pagemain" v-else>

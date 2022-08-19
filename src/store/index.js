@@ -27,7 +27,7 @@ class PageStyle{
 			this.BoxHeight = '200px';
 			this.BoxWidth = 'auto';
 		}
-		this.BackgroundColor = 'rgba(0,0,0,1)';
+		this.BackgroundColor = 'rgba(0,0,0,0)';
 		this.FontColor = 'black';
 		this.FontSize = 'medium';
 		this.FontWeight = 'normal';
