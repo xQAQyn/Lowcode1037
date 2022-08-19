@@ -13,24 +13,24 @@ class PageStyle{
 	FontSize;
 	FontWeight;
 	constructor(type) {
-		this.ToLeft = '100px';
-		this.ToTop = '100px';
+		this.ToLeft = 100;
+		this.ToTop = 100;
 		if(type === 'p' || type === 'a'){
-			this.BoxHeight = '40px';
-			this.BoxWidth = '200px';
+			this.BoxHeight = 40;
+			this.BoxWidth = 200;
 		}
 		else if(type === 'button'){
-			this.BoxHeight = '40px';
-			this.BoxWidth = '100px';
+			this.BoxHeight = 40;
+			this.BoxWidth = 100;
 		}
 		else{
-			this.BoxHeight = '200px';
+			this.BoxHeight = 200;
 			this.BoxWidth = 'auto';
 		}
 		this.BackgroundColor = 'rgba(0,0,0,0)';
 		this.FontColor = 'black';
-		this.FontSize = 'medium';
-		this.FontWeight = 'normal';
+		this.FontSize = 16;
+		this.FontWeight = 400;
 	}
 }
 
