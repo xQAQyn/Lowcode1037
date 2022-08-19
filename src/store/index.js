@@ -88,16 +88,6 @@ const actions = {
 			context.commit('DeleteModule',index)
 	},
 
-	UpdateModule(context,payload) {
-		const index = GetIndexByID(context,payload.id);
-		if(index!== -1)
-			context.commit('UpdateModule',{
-				index: index,
-				styleName: payload.styleName,
-				styleVal: payload.styleVal
-			})
-	},
-
 	Select(context,id){
 		let index = GetIndexByID(context,id)
 		if(index !== -1)
@@ -140,10 +130,7 @@ const mutations = {
 
 	DeleteModule(context,index){
 		state.PageModules.splice(index,1)
-	},
-
-	UpdateModule(context,payload) {
-		state.PageModules[payload.index].style[payload.styleName] = payload.styleVal
+		state.Selected = ''
 	},
 
 	ChangePreview(){

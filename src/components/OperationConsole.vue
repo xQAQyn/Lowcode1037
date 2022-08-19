@@ -15,6 +15,7 @@
           字体大小：<input :value="PageModule.style.FontSize" type="number" @blur="ChangeStyleNum($event,'FontSize')"><br/>
           字体粗细：<input :value="PageModule.style.FontWeight" type="number" @blur="ChangeStyleNum  ($event,'FontWeight')"><br/>
           字体颜色：<input :value="PageModule.style.FontColor" @blur="ChangeStyle($event,'FontColor')"><br/>
+          <button id="DeleteItem" @click="DeleteItem">删除</button>
       </div>
       <p v-else>点击元素查看属性</p>
 
@@ -80,6 +81,10 @@ export default {
                 name: name,
                 NewVal: Number(event.target.value)
             })
+        },
+
+        DeleteItem(){
+            this.$store.dispatch('DeleteModule',this.PageModule.id)
         }
     }
 }
@@ -94,5 +99,13 @@ export default {
   }
   h1{
       font-size: medium;
+  }
+  #DeleteItem{
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      margin: 10px;
   }
 </style>
