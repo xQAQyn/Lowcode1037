@@ -102,6 +102,34 @@ const actions = {
 		let index = GetIndexByID(context,id)
 		if(index !== -1)
 			context.commit('Select',id)
+	},
+
+	ChangeStyle(context, payload) {
+		let index = GetIndexByID(context,payload.id)
+		if(index !== -1)
+			context.commit('ChangeStyle',{
+				index: index,
+				name: payload.name,
+				NewVal: payload.NewVal
+			})
+	},
+
+	ChangeUrl(context,payload) {
+		let index = GetIndexByID(context,payload.id)
+		if(index !== -1)
+			context.commit('ChangeUrl',{
+				index: index,
+				NewVal: payload.NewVal
+			})
+	},
+
+	ChangeValue(context,payload) {
+		let index = GetIndexByID(context,payload.id)
+		if(index !== -1)
+			context.commit('ChangeValue',{
+				index: index,
+				NewVal: payload.NewVal
+			})
 	}
 }
 
@@ -132,6 +160,18 @@ const mutations = {
 
 	Select(context, id) {
 		state.Selected = id;
+	},
+
+	ChangeStyle(context, payload) {
+		state.PageModules[payload.index].style[payload.name] = payload.NewVal
+	},
+
+	ChangeUrl(context, payload) {
+		state.PageModules[payload.index].url = payload.NewVal
+	},
+
+	ChangeValue(context, payload) {
+		state.PageModules[payload.index].value = payload.NewVal
 	}
 }
 
