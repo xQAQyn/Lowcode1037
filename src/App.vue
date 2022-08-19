@@ -6,10 +6,10 @@
         </div>
 
         <div id="preview" v-if="$store.state.Preview">
-
+            <preview-page/>
         </div>
         <div id="Sourcecode" v-else-if="$store.state.SourceCode">
-
+            <code-page/>
         </div>
 
         <div id="pagemain" v-else>
@@ -25,10 +25,14 @@ import HeadColumn from "@/components/HeadColumn";
 import ComponentLib from "@/components/ComponentLib";
 import PageEditor from "@/components/PageEditor";
 import OperationConsole from "@/components/OperationConsole";
+import PreviewPage from "@/components/PreviewPage";
+import CodePage from "@/components/CodePage";
 
 export default {
   name: 'App',
   components:{
+      CodePage,
+      PreviewPage,
     HeadColumn,
     ComponentLib,
     PageEditor,

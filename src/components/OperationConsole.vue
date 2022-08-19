@@ -71,7 +71,6 @@ export default {
                 name: name,
                 NewVal: event.target.value
             })
-            console.log('fuck')
         }
     }
 }
