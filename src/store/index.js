@@ -39,12 +39,32 @@ class PageModule{
 	type;
 	style;
 	events;
+	value;
+	url;
 
 	constructor(type) {
 		this.id = nanoid();
 		this.type = type;
 		this.style = new PageStyle(type);
 		this.events = [];
+
+		if(type === 'p'){
+			this.value = '这是一段文字'
+		}
+		else if(type === 'a'){
+			this.value = '这是一个链接'
+
+		}
+		else if(type === 'button'){
+			this.value = '这是一个按钮'
+		}
+
+		if(type === 'img'){
+			this.url = 'https://cdn.luogu.com.cn/upload/image_hosting/wo96jeen.png'
+		}
+		else if(type === 'a'){
+			this.url = 'https://www.hust.edu.cn/'
+		}
 	}
 }
 
@@ -69,7 +89,6 @@ const actions = {
 	},
 
 	UpdateModule(context,payload) {
-		console.log(payload)
 		const index = GetIndexByID(context,payload.id);
 		if(index!== -1)
 			context.commit('UpdateModule',{
@@ -77,6 +96,12 @@ const actions = {
 				styleName: payload.styleName,
 				styleVal: payload.styleVal
 			})
+	},
+
+	Select(context,id){
+		let index = GetIndexByID(context,id)
+		if(index !== -1)
+			context.commit('Select',id)
 	}
 }
 
@@ -91,11 +116,30 @@ const mutations = {
 
 	UpdateModule(context,payload) {
 		state.PageModules[payload.index].style[payload.styleName] = payload.styleVal
+	},
+
+	ChangePreview(){
+		state.Preview = !state.Preview
+		if(state.Preview)
+			state.SourceCode = false
+	},
+
+	ChangeSource(){
+		state.SourceCode = !state.SourceCode
+		if(state.SourceCode)
+			state.Preview = false
+	},
+
+	Select(context, id) {
+		state.Selected = id;
 	}
 }
 
 const state = {
 	PageModules: [],
+	Preview: false,
+	SourceCode: false,
+	Selected: ""
 }
 
 export default new Vuex.Store({

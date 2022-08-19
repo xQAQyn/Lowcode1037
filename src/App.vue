@@ -1,15 +1,23 @@
 <template>
-  <div id="app">
-    <div id="pageheader">
-      <head-column/>
-    </div>
-    <div id="pagemain">
-      <component-lib/>
-      <page-editor/>
-      <operation-console/>
-    </div>
 
-  </div>
+    <div id="app">
+        <div id="pageheader">
+            <head-column/>
+        </div>
+
+        <div id="preview" v-if="$store.state.Preview">
+            123
+        </div>
+        <div id="Sourcecode" v-else-if="$store.state.SourceCode">
+            345
+        </div>
+
+        <div id="pagemain" v-else>
+            <component-lib/>
+            <page-editor/>
+            <operation-console/>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -32,12 +40,11 @@ export default {
 <style>
 
 #app{
-  width: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #pageheader{
-  position: absolute;
-  top: 0;
   width: 100%;
   height: 30px;
   margin-bottom: 10px;
@@ -51,6 +58,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-content: center;
-
 }
+
+
 </style>
