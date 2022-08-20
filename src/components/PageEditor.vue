@@ -146,4 +146,16 @@ export default {
 #edt .selected{
     border: dashed red;
 }
+
+#edt button{
+    width: 100%;
+}
+
+#edt img{
+    height: 100%;
+}
+
+#edt div{
+    overflow: hidden;
+}
 </style>

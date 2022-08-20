@@ -20,8 +20,8 @@ class PageStyle{
 			this.BoxWidth = 200;
 		}
 		else if(type === 'button'){
-			this.BoxHeight = 40;
-			this.BoxWidth = 100;
+			this.BoxHeight = 24;
+			this.BoxWidth = 96;
 		}
 		else{
 			this.BoxHeight = 200;
