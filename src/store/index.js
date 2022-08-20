@@ -146,7 +146,9 @@ const mutations = {
 	},
 
 	Select(context, id) {
-		state.Selected = id;
+		if(state.Selected === id)
+			state.Selected = ''
+		else state.Selected = id;
 	},
 
 	ChangeStyle(context, payload) {

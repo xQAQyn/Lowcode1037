@@ -5,9 +5,14 @@
               v-for="mod in modules"
               :key="mod.id"
               :id="mod.id"
+              :ref="mod.id"
               class="module"
+              :class="IsSelected(mod.id)"
               :style="GetStyleObject(mod)"
-              @click="Select(mod.id)"
+              @click.prevent="Select(mod.id)"
+              @mousedown.prevent="DragStart($event,mod.style.ToLeft,mod.style.ToTop)"
+              @mousemove.prevent="Drag($event,mod.id)"
+              @mouseup.prevent="DragEnd"
       >
         <span v-html="GenerateHtml(mod)"></span>
       </div>
@@ -22,6 +27,8 @@ export default {
         return {
             modules: this.$store.state.PageModules,
             isMounted: false,
+            dX: 0,
+            dY: 0,
         };
     },
     methods: {
@@ -84,7 +91,34 @@ export default {
             }
         },
         Select(id){
-            this.$store.dispatch('Select',id)
+            if(this.$store.state.Selected !== id)
+                this.$store.dispatch('Select',id)
+        },
+        IsSelected(id){
+            if(this.$store.state.Selected === id)
+                return "selected"
+            return ''
+        },
+        DragStart(event,ox,oy){
+            this.dX = event.clientX - Number(ox)
+            this.dY = event.clientY - Number(oy)
+        },
+        Drag(event,id){
+            if(this.dX !== 0 || this.dY !== 0){
+                this.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'ToTop',
+                    NewVal: event.clientY - this.dY
+                })
+                this.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'ToLeft',
+                    NewVal: event.clientX - this.dX
+                })
+            }
+        },
+        DragEnd(){
+            this.dX = this.dY =0
         }
     },
     mounted() {
@@ -107,5 +141,9 @@ export default {
 
 #edt p {
     margin: 0;
+}
+
+#edt .selected{
+    border: dashed red;
 }
 </style>
