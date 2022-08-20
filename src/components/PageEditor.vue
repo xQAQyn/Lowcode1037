@@ -1,5 +1,5 @@
 <template>
-    <div id="edt" ref="editor">
+    <div id="edt" ref="editor" @click="Select('')">
     <span v-if="isMounted">
       <div
               v-for="mod in modules"
@@ -9,13 +9,34 @@
               class="module"
               :class="IsSelected(mod.id)"
               :style="GetStyleObject(mod)"
-              @click.prevent="Select(mod.id)"
+              @click.prevent.stop="Select(mod.id)"
               @mousedown.prevent="DragStart($event,mod.style.ToLeft,mod.style.ToTop)"
               @mousemove.prevent="Drag($event,mod.id)"
               @mouseup.prevent="DragEnd"
       >
-        <span v-html="GenerateHtml(mod)"></span>
+          <span v-html="GenerateHtml(mod)"></span>
+          <div
+                  id="left"
+                  v-show="$store.state.Selected === mod.id"
+                  @mousedown.prevent.stop="ResizeLeftStart(mod.style.ToLeft,mod.style.BoxWidth,mod.id)"
+          ></div>
+          <div
+                  id="right"
+                  v-show="$store.state.Selected === mod.id"
+                  @mousedown.prevent.stop="ResizeRightStart(mod.style.ToLeft,mod.id)"
+          ></div>
+          <div
+                  id="top"
+                  v-show="$store.state.Selected === mod.id"
+                  @mousedown.prevent.stop="ResizeTopStart(mod.style.ToTop,mod.style.BoxHeight,mod.id)"
+          ></div>
+          <div
+                  id="bottom"
+                  v-show="$store.state.Selected === mod.id"
+                  @mousedown.prevent.stop="ResizeBottomStart(mod.style.ToTop,mod.id)"
+          ></div>
       </div>
+
     </span>
     </div>
 </template>
@@ -29,6 +50,10 @@ export default {
             isMounted: false,
             dX: 0,
             dY: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
         };
     },
     methods: {
@@ -90,36 +115,114 @@ export default {
                     return `<video src="${mod.url}"/>`;
             }
         },
-        Select(id){
-            if(this.$store.state.Selected !== id)
-                this.$store.dispatch('Select',id)
+        Select(id) {
+            if (this.$store.state.Selected !== id)
+                this.$store.dispatch('Select', id)
         },
-        IsSelected(id){
-            if(this.$store.state.Selected === id)
+        IsSelected(id) {
+            if (this.$store.state.Selected === id)
                 return "selected"
             return ''
         },
-        DragStart(event,ox,oy){
+        DragStart(event, ox, oy) {
             this.dX = event.clientX - Number(ox)
             this.dY = event.clientY - Number(oy)
         },
-        Drag(event,id){
-            if(this.dX !== 0 || this.dY !== 0){
-                this.$store.dispatch('ChangeStyle',{
+        Drag(event, id) {
+            if (this.dX !== 0 || this.dY !== 0) {
+                this.$store.dispatch('ChangeStyle', {
                     id: id,
                     name: 'ToTop',
                     NewVal: event.clientY - this.dY
                 })
-                this.$store.dispatch('ChangeStyle',{
+                this.$store.dispatch('ChangeStyle', {
                     id: id,
                     name: 'ToLeft',
                     NewVal: event.clientX - this.dX
                 })
             }
         },
-        DragEnd(){
-            this.dX = this.dY =0
-        }
+        DragEnd() {
+            this.dX = this.dY = 0
+        },
+        ResizeLeftStart(ToLeft,Width,id){
+            this.right = Number(ToLeft) + Number(Width) + this.GetOffsetLeft()
+            const vm = this
+            let ResizeLeft = function (event){
+                vm.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'ToLeft',
+                    NewVal: event.clientX - vm.GetOffsetLeft()
+                })
+                vm.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'BoxWidth',
+                    NewVal: vm.right - event.clientX
+                })
+            };
+            let ResizeLeftEnd = function (){
+                document.removeEventListener('mousemove',ResizeLeft)
+                document.removeEventListener('mouseup',ResizeLeftEnd)
+            }
+            document.addEventListener('mousemove',ResizeLeft)
+            document.addEventListener('mouseup',ResizeLeftEnd)
+        },
+        ResizeRightStart(ToLeft,id){
+            this.left = Number(ToLeft) + this.GetOffsetLeft()
+            const vm = this
+            let ResizeRight = function (event){
+                vm.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'BoxWidth',
+                    NewVal: event.clientX - vm.left
+                })
+            };
+            let ResizeRightEnd = function (){
+                document.removeEventListener('mousemove',ResizeRight)
+                document.removeEventListener('mouseup',ResizeRightEnd)
+            }
+            document.addEventListener('mousemove',ResizeRight)
+            document.addEventListener('mouseup',ResizeRightEnd)
+        },
+        ResizeTopStart(ToTop,Height,id){
+            this.bottom = Number(ToTop) + Number(Height) + this.GetOffsetTop()
+            const vm = this
+            let ResizeTop = function (event){
+                vm.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'ToTop',
+                    NewVal: event.clientY - 39 - vm.GetOffsetTop()
+                })
+                vm.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'BoxHeight',
+                    NewVal: vm.bottom - event.clientY + 39
+                })
+            };
+            let ResizeTopEnd = function (){
+                document.removeEventListener('mousemove',ResizeTop)
+                document.removeEventListener('mouseup',ResizeTopEnd)
+            }
+            document.addEventListener('mousemove',ResizeTop)
+            document.addEventListener('mouseup',ResizeTopEnd)
+        },
+        ResizeBottomStart(ToTop,id){
+            this.top = Number(ToTop) + this.GetOffsetTop()
+            const vm = this
+            let ResizeBottom = function (event){
+                vm.$store.dispatch('ChangeStyle',{
+                    id: id,
+                    name: 'BoxHeight',
+                    NewVal: event.clientY - 39 - vm.top
+                })
+            };
+            let ResizeBottomEnd = function (){
+                document.removeEventListener('mousemove',ResizeBottom)
+                document.removeEventListener('mouseup',ResizeBottomEnd)
+            }
+            document.addEventListener('mousemove',ResizeBottom)
+            document.addEventListener('mouseup',ResizeBottomEnd)
+        },
     },
     mounted() {
         this.isMounted = true;
@@ -143,19 +246,51 @@ export default {
     margin: 0;
 }
 
-#edt .selected{
-    border: dashed red;
+#edt .selected {
+    border: solid cornflowerblue;
 }
 
-#edt button{
-    width: 100%;
-}
-
-#edt img{
+#edt * {
     height: 100%;
 }
 
-#edt div{
-    overflow: hidden;
+#edt #left{
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    left: -3px;
+    top: calc(50% - 2px);
+    background-color: white;
+    cursor: ew-resize;
+}
+
+#edt #right{
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    left: calc(100% - 2px);
+    top: calc(50% - 2px);
+    background-color: white;
+    cursor: ew-resize;
+}
+
+#edt #top{
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    left: calc(50% - 2px);
+    top: -2px;
+    background-color: white;
+    cursor: ns-resize;
+}
+
+#edt #bottom{
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    left: calc(50% - 2px);
+    top: calc(100% - 2px);
+    background-color: white;
+    cursor: ns-resize;
 }
 </style>

@@ -16,8 +16,8 @@ class PageStyle{
 		this.ToLeft = 100;
 		this.ToTop = 100;
 		if(type === 'p' || type === 'a'){
-			this.BoxHeight = 40;
-			this.BoxWidth = 200;
+			this.BoxHeight = 21;
+			this.BoxWidth = 120;
 		}
 		else if(type === 'button'){
 			this.BoxHeight = 24;
