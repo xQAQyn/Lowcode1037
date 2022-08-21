@@ -60,7 +60,10 @@ class PageModule{
 		}
 
 		if(type === 'img'){
-			this.url = 'https://cdn.luogu.com.cn/upload/image_hosting/wo96jeen.png'
+			this.url = 'sampleimg.jpg'
+		}
+		else if(type === 'video'){
+			this.url = 'samplevideo.mp4'
 		}
 		else if(type === 'a'){
 			this.url = 'https://www.hust.edu.cn/'

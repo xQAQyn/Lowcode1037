@@ -4,7 +4,6 @@
         <div id="pageheader">
             <head-column/>
         </div>
-
         <div id="preview" v-if="$store.state.Preview">
             <preview-page/>
         </div>

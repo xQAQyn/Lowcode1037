@@ -119,7 +119,7 @@ export default {
                 case "img":
                     return `<img src="${mod.url}"/>`;
                 case "video":
-                    return `<video src="${mod.url}"/>`;
+                    return `<video src="${mod.url}" autoplay loop/>`;
             }
         },
         Select(id) {
