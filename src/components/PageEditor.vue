@@ -10,11 +10,17 @@
               :class="IsSelected(mod.id)"
               :style="GetStyleObject(mod)"
               @click.prevent.stop="Select(mod.id)"
-              @mousedown.prevent="DragStart($event,mod.style.ToLeft,mod.style.ToTop)"
+              @dblclick="StartEdit"
+              @mousedown="DragStart($event,mod.style.ToLeft,mod.style.ToTop)"
               @mousemove.prevent="Drag($event,mod.id)"
               @mouseup.prevent="DragEnd"
       >
-          <span v-html="GenerateHtml(mod)"></span>
+          <span v-if="$store.state.Selected !== mod.id || !isEditing" v-html="GenerateHtml(mod)"></span>
+          <input
+                  v-else
+                  :value="mod.value"
+                  @blur="FinishEdit($event,mod.id)"
+          >
           <div
                   id="left"
                   v-show="$store.state.Selected === mod.id"
@@ -54,6 +60,7 @@ export default {
             right: 0,
             top: 0,
             bottom: 0,
+            isEditing: false,
         };
     },
     methods: {
@@ -223,6 +230,17 @@ export default {
             document.addEventListener('mousemove',ResizeBottom)
             document.addEventListener('mouseup',ResizeBottomEnd)
         },
+        StartEdit(){
+            this.isEditing = true
+        },
+        FinishEdit(event,id){
+            this.$store.dispatch('ChangeValue',{
+                id: id,
+                NewVal: event.target.value
+            })
+            this.isEditing = false
+        }
+
     },
     mounted() {
         this.isMounted = true;
@@ -292,5 +310,11 @@ export default {
     top: calc(100% - 2px);
     background-color: white;
     cursor: ns-resize;
+}
+
+#edt input{
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 </style>
