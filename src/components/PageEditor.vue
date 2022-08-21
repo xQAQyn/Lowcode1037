@@ -11,9 +11,8 @@
               :style="GetStyleObject(mod)"
               @click.prevent.stop="Select(mod.id)"
               @dblclick="StartEdit"
-              @mousedown="DragStart($event,mod.style.ToLeft,mod.style.ToTop)"
-              @mousemove.prevent="Drag($event,mod.id)"
-              @mouseup.prevent="DragEnd"
+              @mousedown="DragStart($event,mod.style.ToLeft,mod.style.ToTop,mod.id)"
+              @mousemove.prevent
       >
           <span v-if="$store.state.Selected !== mod.id || !isEditing" v-html="GenerateHtml(mod)"></span>
           <input
@@ -131,26 +130,30 @@ export default {
                 return "selected"
             return ''
         },
-        DragStart(event, ox, oy) {
+        DragStart(event, ox, oy, id) {
             this.dX = event.clientX - Number(ox)
             this.dY = event.clientY - Number(oy)
-        },
-        Drag(event, id) {
-            if (this.dX !== 0 || this.dY !== 0) {
-                this.$store.dispatch('ChangeStyle', {
-                    id: id,
-                    name: 'ToTop',
-                    NewVal: event.clientY - this.dY
-                })
-                this.$store.dispatch('ChangeStyle', {
-                    id: id,
-                    name: 'ToLeft',
-                    NewVal: event.clientX - this.dX
-                })
+            const vm = this
+            let Drag = function (event){
+                if (this.dX !== 0 || this.dY !== 0) {
+                    vm.$store.dispatch('ChangeStyle', {
+                        id: id,
+                        name: 'ToTop',
+                        NewVal: event.clientY - vm.dY
+                    })
+                    vm.$store.dispatch('ChangeStyle', {
+                        id: id,
+                        name: 'ToLeft',
+                        NewVal: event.clientX - vm.dX
+                    })
+                }
             }
-        },
-        DragEnd() {
-            this.dX = this.dY = 0
+            let DragEnd = function (){
+                document.removeEventListener('mousemove',Drag)
+                document.removeEventListener('mouseup',DragEnd)
+            }
+            document.addEventListener('mousemove',Drag)
+            document.addEventListener('mouseup',DragEnd)
         },
         ResizeLeftStart(ToLeft,Width,id){
             this.right = Number(ToLeft) + Number(Width) + this.GetOffsetLeft()
