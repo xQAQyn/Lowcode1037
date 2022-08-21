@@ -4,14 +4,14 @@
         <div id="pageheader">
             <head-column/>
         </div>
-        <div id="preview" v-if="$store.state.Preview">
+        <div id="preview" v-show="$store.state.Preview">
             <preview-page/>
         </div>
-        <div id="Sourcecode" v-else-if="$store.state.SourceCode">
+        <div id="Sourcecode" v-if="$store.state.SourceCode">
             <code-page/>
         </div>
 
-        <div id="pagemain" v-else>
+        <div id="pagemain" v-show="!$store.state.Preview && !$store.state.SourceCode">
             <component-lib/>
             <page-editor/>
             <operation-console/>

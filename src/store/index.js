@@ -60,10 +60,10 @@ class PageModule{
 		}
 
 		if(type === 'img'){
-			this.url = 'sampleimg.jpg'
+			this.url = 'https://cdn.luogu.com.cn/upload/image_hosting/wo96jeen.png'
 		}
 		else if(type === 'video'){
-			this.url = 'samplevideo.mp4'
+			this.url = 'https://vdn.vzuu.com/HD/12bb7220-f69e-11ea-89de-527435e7c6a6.mp4?disable_local_cache=1&bu=http-da4bec50&c=avc.0.0&f=mp4&expiration=1661090206&auth_key=1661090206-0-0-2a3fe004633abe7efe6adf541f2310f2&v=ali&pu=da4bec50'
 		}
 		else if(type === 'a'){
 			this.url = 'https://www.hust.edu.cn/'

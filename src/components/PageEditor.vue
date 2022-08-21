@@ -115,11 +115,11 @@ export default {
                 case "a":
                     return `<a href="${mod.url}">${mod.value}</a>`;
                 case "button":
-                    return `<button>${mod.value}</button>`;
+                    return `<button style="height:100%;width:100%">${mod.value}</button>`;
                 case "img":
-                    return `<img src="${mod.url}"/>`;
+                    return `<img src="${mod.url}" height="100%"/>`;
                 case "video":
-                    return `<video src="${mod.url}" autoplay loop/>`;
+                    return `<video src="${mod.url}" height="100%" loop controls/>`;
             }
         },
         Select(id) {

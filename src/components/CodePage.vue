@@ -9,10 +9,11 @@ export default {
     name: "CodePage",
     computed:{
         SourceCode(){
-            let edt = document.querySelector('#edt')
-            return '<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><title>Title</title><style>* {position: absolute;}</style></head><body>' +
+            let edt = document.querySelector('#Preview')
+            return '<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><title>Title</title><style>*' +
+                    '{position: absolute;height: 100%;width: 100%;min-width: 200px;min-height: 200px}</style></head><body><div>' +
                     edt.innerHTML + '' +
-                    '    </body></html>'
+                    '</div></body></html>'
         }
     },
 }
